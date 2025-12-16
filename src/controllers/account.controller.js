@@ -26,7 +26,19 @@ const getAccount = async (req, res) => {
   }
 };
 
+// ✅ GET LEDGER HISTORY
+const getLedger = async (req, res) => {
+  try {
+    const { accountId } = req.params;
+    const ledger = await service.getAccountLedger(accountId);
+    res.json(ledger);
+  } catch (err) {
+    res.status(500).json({ error: "Failed to fetch ledger" });
+  }
+};
+
 module.exports = {
   createAccount,
   getAccount,
+  getLedger, // 👈 export added
 };

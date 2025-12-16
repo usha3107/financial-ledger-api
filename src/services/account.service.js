@@ -1,7 +1,9 @@
 const pool = require("../config/db");
-const { getBalance } = require("../repositories/ledger.repo");
+const { getBalance, getLedgerEntries } = require("../repositories/ledger.repo");
 
-// CREATE ACCOUNT
+/**
+ * CREATE ACCOUNT
+ */
 async function createAccount({ userId, accountType, currency }) {
   const result = await pool.query(
     `
@@ -15,7 +17,9 @@ async function createAccount({ userId, accountType, currency }) {
   return result.rows[0];
 }
 
-// GET ACCOUNT WITH BALANCE
+/**
+ * GET ACCOUNT BY ID (WITH BALANCE)
+ */
 async function getAccountById(accountId) {
   const result = await pool.query(
     "SELECT * FROM accounts WHERE id = $1",
@@ -34,7 +38,15 @@ async function getAccountById(accountId) {
   };
 }
 
+/**
+ * GET LEDGER HISTORY FOR ACCOUNT
+ */
+async function getAccountLedger(accountId) {
+  return await getLedgerEntries(accountId);
+}
+
 module.exports = {
   createAccount,
   getAccountById,
+  getAccountLedger,
 };

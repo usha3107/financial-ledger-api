@@ -3,6 +3,7 @@ const router = express.Router();
 
 const controller = require("../controllers/transaction.controller");
 
-router.post("/transfers", controller.transfer);
+// DEPOSIT money
+router.post("/deposits", controller.deposit);
 
 module.exports = router;
